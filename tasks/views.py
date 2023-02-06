@@ -3,8 +3,6 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-tasks = []
-
 
 class NewTaskForm(forms.Form):
     task = forms.CharField(label="New Task")
@@ -13,8 +11,11 @@ class NewTaskForm(forms.Form):
 
 
 def index(request):
+    if "tasks" not in request.session:
+        request.session["tasks"] = []
+
     return render(request, "tasks/index.html", {
-        "tasks": tasks
+        "tasks": request.session["tasks"]
     })
 
 
@@ -25,8 +26,8 @@ def add(request):
         if form.is_valid():
             # if form is valid save data in task variable
             task = form.cleaned_data["task"]
-            # add taks to the list of tasks
-            tasks.append(task)
+            # add taks to the list of tasks in the user session
+            request.session["tasks"] += [task]
             return HttpResponseRedirect(reverse("tasks:index"))
         else:
             # not valid? return to the form, with the entered data giving error feedback
