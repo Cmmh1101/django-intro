@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tasks</title>
-  </head>
-  <body>
-    <form>
-      <h1>Add New Task</h1>
-      <input type="text" name="task" />
-      <input type="submit" />
-    </form>
-  </body>
-</html>
+{% extends "tasks/layout.html" %} {% block body %}
+<form>
+  <h1>Add New Task</h1>
+  <input type="text" name="task" />
+  <input type="submit" />
+</form>
+<a href="{% url 'tasks:index' %}">View tasks</a>
+{% endblock %}
